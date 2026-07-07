@@ -6,7 +6,7 @@ Detects whenever the AWS account is used
 
 ##Risk
 
-Root account usage should be extremely rare.Any activity should be investiaged
+Root account usage should be extremely rare, Any activity should be investigated
 
 ## SPL
 
