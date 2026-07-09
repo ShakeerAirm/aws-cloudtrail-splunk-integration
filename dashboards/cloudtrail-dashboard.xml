@@ -1,0 +1,55 @@
+<dashboard version="1.1">
+  <label>AWS CloudTrail Security Dashboard</label>
+  <description>Dashboard for monitoring AWS CloudTrail security events.</description>
+
+  <row>
+    <panel>
+      <title>CloudTrail Events</title>
+      <table>
+        <search>
+          <query>
+index=aws sourcetype=aws:cloudtrail
+| table _time eventName eventSource userIdentity.userName sourceIPAddress awsRegion
+          </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top AWS API Calls</title>
+      <chart>
+        <search>
+          <query>
+index=aws sourcetype=aws:cloudtrail
+| stats count by eventName
+| sort -count
+| head 10
+          </query>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top Source IP Addresses</title>
+      <chart>
+        <search>
+          <query>
+index=aws sourcetype=aws:cloudtrail
+| stats count by sourceIPAddress
+| sort -count
+| head 10
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
